@@ -1,0 +1,2 @@
+llama-stack-client>=0.0.15
+termcolor>=2.3.0
