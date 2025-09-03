@@ -1,0 +1,121 @@
+[
+  {
+    "error": "Step failed with exit code 137 (OOMKilled)",
+    "context": "Container exceeded memory limits",
+    "solution": "Increase `resources.limits.memory` in Task spec",
+    "reference": "https://tekton.dev/docs/memory-limits",
+    "source": "Tekton Docs",
+    "metadata": {
+      "error_type": "OOM",
+      "severity": "critical",
+      "timestamp": "2024-07-25T14:30:00Z",
+      "cluster_env": "prod",
+      "tekton_version": "v0.45.0",
+      "related_errors": ["OOMKilled"]
+    }
+  },
+  {
+    "error": "create-trusted-artifact step failed with exit code 1",
+    "context": "git-clone-oci-ta task failed during trusted artifact creation. Clone and symlink-check steps succeeded, but artifact storage to OCI registry failed.",
+    "solution": "Check registry authentication, network connectivity, permissions to target repository, and registry quota limits. Verify credentials for quay.io registry access.",
+    "reference": "https://tekton.dev/docs/how-to-guides/kaniko-build-push/",
+    "source": "TaskRun Analysis",
+    "metadata": {
+      "error_type": "Registry_Push_Failure",
+      "severity": "high",
+      "timestamp": "2025-02-16T16:40:59Z",
+      "cluster_env": "konflux",
+      "tekton_version": "v1",
+      "task_name": "git-clone-oci-ta",
+      "failed_step": "create-trusted-artifact",
+      "repository": "https://github.com/rh-messaging/activemq-artemis-operator",
+      "pull_request": "84",
+      "commit_sha": "52f25f42f9163a57b20f04f7a4821d514e7ae9f2",
+      "oci_registry": "quay.io/redhat-user-workloads/team-amq-tenant/amq-broker-operator-test/activemq-artemis-operator-main",
+      "related_errors": ["Registry authentication", "Network connectivity", "Permission denied", "Quota exceeded"]
+    }
+  },
+  {
+    "error": "Go version compatibility failure: go.mod requires go >= 1.23.0 (running go 1.22.12)",
+    "context": "Build step failed during controller-gen generation when Go 1.22.12 was used but appstudio-controller module requires Go 1.23.0 or higher.",
+    "solution": "Update container image to use Go 1.23.0 or higher, or modify go.mod to require compatible Go version. Check Dockerfile base image and verify GOTOOLCHAIN environment variable settings.",
+    "reference": "https://go.dev/doc/toolchain",
+    "source": "Build Log Analysis",
+    "metadata": {
+      "error_type": "Go_Version_Compatibility",
+      "severity": "high",
+      "timestamp": "2025-07-18T18:13:56Z",
+      "cluster_env": "tekton-ci",
+      "tekton_version": "v0.35.1",
+      "task_name": "buildah",
+      "failed_step": "build",
+      "repository": "https://github.com/redhat-appstudio/managed-gitops",
+      "pull_request": "864",
+      "commit_sha": "9a8e4b12b4b524fbe6978b9cae7c6dda61b5892e",
+      "go_version_required": "1.23.0",
+      "go_version_available": "1.22.12",
+      "related_errors": ["GOTOOLCHAIN=local", "controller-gen", "Module compatibility"]
+    }
+  },
+  {
+    "error": "Missing kustomization.yaml files during sed operations",
+    "context": "sed commands failed because required kustomization.yaml files do not exist in the expected paths during infra-deployments update script execution.",
+    "solution": "Verify git clone completed successfully and all expected directories exist. Check if repository structure has changed or if the script paths need updating. Ensure proper repository checkout before running update scripts.",
+    "reference": "https://kustomize.io/",
+    "source": "Task Log Analysis",
+    "metadata": {
+      "error_type": "Missing_Files",
+      "severity": "medium",
+      "timestamp": "2025-06-30T14:04:09Z",
+      "cluster_env": "tekton-ci",
+      "tekton_version": "v0.35.1",
+      "task_name": "update-infra-deployments",
+      "failed_step": "run-update-script",
+      "repository": "https://github.com/redhat-appstudio/managed-gitops",
+      "commit_sha": "c4374002d4d5ca5588c3e677447980ef03b672fa",
+      "missing_files": ["components/gitops/staging/base/kustomization.yaml", "components/gitops/production/base/kustomization.yaml", "components/gitops/development/kustomization.yaml"],
+      "related_errors": ["sed command failure", "File not found", "Repository structure"]
+    }
+  },
+  {
+    "error": "Permission denied creating .docker directory",
+    "context": "Credential copy operation failed due to insufficient permissions when trying to create /.docker directory during task initialization.",
+    "solution": "Check pod security context settings, ensure proper permissions for credential mounting, or modify task to use alternative credential storage location. Consider using workspace volumes instead of root filesystem.",
+    "reference": "https://tekton.dev/docs/pipelines/workspaces/",
+    "source": "Task Log Analysis",
+    "metadata": {
+      "error_type": "Permission_Denied",
+      "severity": "low",
+      "timestamp": "2025-06-30T14:03:45Z",
+      "cluster_env": "tekton-ci",
+      "tekton_version": "v0.35.1",
+      "task_name": "update-infra-deployments",
+      "failed_step": "git-clone-infra-deployments",
+      "repository": "https://github.com/redhat-appstudio/managed-gitops",
+      "commit_sha": "c4374002d4d5ca5588c3e677447980ef03b672fa",
+      "permission_issue": "mkdir /.docker: permission denied",
+      "related_errors": ["Security context", "Credential mounting", "Filesystem permissions"]
+    }
+  },
+  {
+    "error": "Build step failed with exit code 1 in buildah task",
+    "context": "Container build process failed during the build step of buildah task, causing all subsequent SBOM and push steps to be skipped.",
+    "solution": "Check build logs for specific build errors, verify Dockerfile syntax, ensure base images are accessible, check resource limits, and verify build context contains all required files.",
+    "reference": "https://buildah.io/troubleshooting.html",
+    "source": "TaskRun Status Analysis",
+    "metadata": {
+      "error_type": "Build_Failure",
+      "severity": "high",
+      "timestamp": "2025-02-16T16:43:04Z",
+      "cluster_env": "konflux",
+      "tekton_version": "v1",
+      "task_name": "buildah",
+      "failed_step": "build",
+      "repository": "https://github.com/rh-messaging/activemq-artemis-operator",
+      "pull_request": "85",
+      "commit_sha": "e8cdcdad953f72f1e826d321e41a3332aaa585c5",
+      "skipped_steps": ["sbom-syft-generate", "analyse-dependencies-java-sbom", "prepare-sboms", "inject-sbom-and-push", "upload-sbom"],
+      "related_errors": ["Container build", "Dockerfile", "Base image", "Resource limits"]
+    }
+  }
+]
