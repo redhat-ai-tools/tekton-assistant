@@ -26,19 +26,25 @@ graph TD
 ```
 
 ### Two-phase pipeline
+The overall system can be thought of as a two-phase pipeline:
+
+Knowledge Ingestion Pipeline (Offline, Pre-processing)
+Debugging Runtime Pipeline (Online, Real-time)
 ```mermaid
 graph LR
     subgraph A [Knowledge Ingestion Pipeline]
         direction LR
-        A1[Source Data<br/>Docs, GitHub, Curated KB] --> A2[Ingestion (this repo)<br/>Parser/Formatter] --> A3[Vector DB<br/>tekton_knowledge_base]
+        A1[Source Data<br/>Docs, GitHub, etc.] --> A2[Ingestion<br/>Parser/Formatter] --> A3[Vector DB<br/>tekton_knowledge_base]
     end
 
     subgraph B [Debugging Runtime Pipeline]
         direction TB
-        B1[TaskRun/PipelineRun ID or logs] --> B2[Context Extractor] --> B3[Query Builder] --> B4[RAG Agent]
+        B1[TaskRun ID] --> B2[Context Extractor] --> B3[Query Builder] --> B4[RAG Agent]
         A3 -.-> B4
         B4 --> B5[Response Generator]
     end
+
+    A -- Pre-populates --> A3
 ```
 
 ---
