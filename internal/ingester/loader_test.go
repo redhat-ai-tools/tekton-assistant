@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	ttypes "tekton-assistant-go/internal/types"
+	ttypes "tekton-assistant/internal/types"
 )
 
 func TestInferErrorType(t *testing.T) {
