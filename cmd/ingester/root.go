@@ -49,3 +49,5 @@ func Execute() {
 		panic(err)
 	}
 }
+
+func main() { Execute() }
