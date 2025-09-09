@@ -13,7 +13,7 @@ import (
 	"syscall"
 	"time"
 
-	"tekton-assistant/pkg/extractor"
+	"tekton-failure-assist/pkg/extractor"
 )
 
 // HandlerFunc defines a generic HTTP handler function type

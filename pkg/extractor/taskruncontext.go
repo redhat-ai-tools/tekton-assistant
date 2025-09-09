@@ -2,7 +2,7 @@ package extractor
 
 import (
 	"context"
-	"tekton-assistant/pkg/types"
+	"tekton-failure-assist/pkg/types"
 )
 
 // ExtractTaskRunContext is a placeholder implementation.

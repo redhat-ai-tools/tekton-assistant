@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	loaderpkg "tekton-assistant/pkg/ingester"
+	loaderpkg "tekton-failure-assist/pkg/ingester"
 
 	llamastackclient "github.com/llamastack/llama-stack-client-go"
 	"github.com/llamastack/llama-stack-client-go/option"

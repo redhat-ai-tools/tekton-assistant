@@ -1,4 +1,4 @@
-module tekton-assistant
+module tekton-failure-assist
 
 go 1.23.6
 
