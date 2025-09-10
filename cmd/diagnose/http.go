@@ -13,7 +13,7 @@ import (
 	"syscall"
 	"time"
 
-	"tekton-failure-assist/pkg/extractor"
+	"tekton-assist/pkg/inspector"
 )
 
 // HandlerFunc defines a generic HTTP handler function type
@@ -42,7 +42,7 @@ func NewHTTPServer(endpoint string, log *log.Logger) *httpServer {
 
 // registerHandlers registers all HTTP endpoints
 func (h *httpServer) registerHandlers() {
-	h.handlers["/taskrun/diagnose"] = h.handleExtract
+	h.handlers["/taskrun/diagnose"] = h.handleDiagnose
 	// Add more endpoints here if needed
 }
 
@@ -66,20 +66,26 @@ func (h *httpServer) initServer() {
 	}
 }
 
-// handleExtract handles the /extract endpoint
-func (h *httpServer) handleExtract(w http.ResponseWriter, r *http.Request) {
-	taskrunID := r.URL.Query().Get("taskrun_id")
+// handleDiagnose handles the /taskrun/diagnose endpoint
+func (h *httpServer) handleDiagnose(w http.ResponseWriter, r *http.Request) {
+	taskrunName := r.URL.Query().Get("taskrun_name")
 	namespace := r.URL.Query().Get("namespace")
-	if taskrunID == "" || namespace == "" {
-		http.Error(w, "missing taskrun_id or namespace", http.StatusBadRequest)
+	if taskrunName == "" || namespace == "" {
+		http.Error(w, "missing taskrun_name or namespace", http.StatusBadRequest)
 		return
 	}
 
-	h.log.Printf("Extract request received: taskrun_id=%s, namespace=%s", taskrunID, namespace)
+	h.log.Printf("Diagnose request received: taskrun_name=%s, namespace=%s", taskrunName, namespace)
 
-	result, err := extractor.ExtractTaskRunContext(r.Context(), taskrunID, namespace)
+	ins, err := inspector.NewInspector()
 	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to extract context: %v", err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("failed to create inspector: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	result, err := ins.InspectTaskRun(r.Context(), namespace, taskrunName)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to inspect taskrun: %v", err), http.StatusInternalServerError)
 		return
 	}
 

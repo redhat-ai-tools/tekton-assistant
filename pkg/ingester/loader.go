@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"tekton-failure-assist/pkg/types"
+	"tekton-assist/pkg/types"
 )
 
 type Loader struct{}
