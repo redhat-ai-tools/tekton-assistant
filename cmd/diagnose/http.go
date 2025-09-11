@@ -13,6 +13,7 @@ import (
 	"syscall"
 	"time"
 
+	"tekton-assist/pkg/analysis"
 	"tekton-assist/pkg/inspector"
 )
 
@@ -25,14 +26,16 @@ type httpServer struct {
 	httpServerEndpoint string
 	log                *log.Logger
 	handlers           map[string]HandlerFunc
+	llm                analysis.LLM
 }
 
 // NewHTTPServer creates a new httpServer with modular handlers
-func NewHTTPServer(endpoint string, log *log.Logger) *httpServer {
+func NewHTTPServer(endpoint string, log *log.Logger, llm analysis.LLM) *httpServer {
 	h := &httpServer{
 		httpServerEndpoint: endpoint,
 		log:                log,
 		handlers:           make(map[string]HandlerFunc),
+		llm:                llm,
 	}
 
 	h.registerHandlers()
@@ -89,8 +92,26 @@ func (h *httpServer) handleDiagnose(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Optionally ask LLM for diagnosis
+	var analysisText string
+	if h.llm != nil {
+		prompt := analysis.BuildTaskRunPrompt(result)
+		ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
+		defer cancel()
+		if out, err := h.llm.Analyze(ctx, prompt); err == nil {
+			analysisText = out
+		} else {
+			h.log.Printf("LLM analyze failed: %v", err)
+		}
+	}
+
+	type response struct {
+		Debug    interface{} `json:"debug"`
+		Analysis string      `json:"analysis,omitempty"`
+	}
+
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(result); err != nil {
+	if err := json.NewEncoder(w).Encode(response{Debug: result, Analysis: analysisText}); err != nil {
 		h.log.Printf("Failed to encode response: %v", err)
 	}
 }

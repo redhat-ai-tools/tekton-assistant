@@ -6,6 +6,8 @@ import (
 	"sync"
 
 	"github.com/spf13/cobra"
+
+	"tekton-assist/pkg/analysis"
 )
 
 func init() {
@@ -17,7 +19,17 @@ var serveCmd = &cobra.Command{
 	Short: "Start the context extractor HTTP server",
 	Run: func(cmd *cobra.Command, args []string) {
 		logger := log.New(os.Stdout, "context-extractor ", log.LstdFlags|log.Lshortfile)
-		srv := NewHTTPServer(cfg.Addr, logger)
+		llm, err := analysis.NewOpenAILLM(analysis.OpenAIConfig{
+			Model:          cfg.OpenAIModel,
+			BaseURL:        cfg.OpenAIBase,
+			Temperature:    cfg.Temperature,
+			MaxTokens:      cfg.MaxTokens,
+			RequestTimeout: cfg.Timeout,
+		})
+		if err != nil {
+			logger.Printf("warning: OpenAI LLM disabled: %v", err)
+		}
+		srv := NewHTTPServer(cfg.Addr, logger, llm)
 
 		var wg sync.WaitGroup
 		srv.startListener(&wg)

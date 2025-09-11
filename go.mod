@@ -7,11 +7,13 @@ toolchain go1.24.7
 require (
 	github.com/fatih/color v1.16.0
 	github.com/llamastack/llama-stack-client-go v0.1.0-alpha.1
+	github.com/openai/openai-go/v2 v2.0.0
 	github.com/spf13/cobra v1.8.0
 	github.com/tektoncd/pipeline v1.3.1
 	k8s.io/api v0.32.7
 	k8s.io/apimachinery v0.32.7
 	k8s.io/client-go v0.32.7
+	knative.dev/pkg v0.0.0-20250415155312-ed3e2158b883
 )
 
 require (
@@ -90,7 +92,6 @@ require (
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20241212222426-2c72e554b1e7 // indirect
 	k8s.io/utils v0.0.0-20241210054802-24370beab758 // indirect
-	knative.dev/pkg v0.0.0-20250415155312-ed3e2158b883 // indirect
 	sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.5.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
