@@ -13,7 +13,7 @@ func BuildTaskRunPrompt(info types.TaskRunDebugInfo) string {
 	fmt.Fprintf(&b, "Analyze this Tekton TaskRun failure and propose fixes.\n")
 	fmt.Fprintf(&b, "Provide: root cause, likely failing component, and concrete remediation steps.\n\n")
 	fmt.Fprintf(&b, "Context:\n")
-	fmt.Fprintf(&b, "- TaskRun: %s\n", info.TaskRunID)
+	fmt.Fprintf(&b, "- TaskRun: %s\n", info.TaskRun)
 	fmt.Fprintf(&b, "- Namespace: %s\n", info.Namespace)
 	if info.Succeeded {
 		fmt.Fprintf(&b, "- Succeeded: true\n")

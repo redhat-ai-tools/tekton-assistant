@@ -3,7 +3,7 @@ package types
 // TaskRunDebugInfo represents a distilled view of a TaskRun's outcome
 // and the primary failure signal if it did not succeed.
 type TaskRunDebugInfo struct {
-	TaskRunID  string    `json:"taskrun_id"`
+	TaskRun    string    `json:"taskrun"`
 	Namespace  string    `json:"namespace"`
 	Succeeded  bool      `json:"succeeded"`
 	FailedStep StepInfo  `json:"failed_step,omitempty"`

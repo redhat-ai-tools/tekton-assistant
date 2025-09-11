@@ -77,7 +77,7 @@ func NewInspectorFromKubeconfig(kubeconfigPath string) (Inspector, error) {
 // InspectTaskRun fetches a TaskRun and summarizes its success/failure state,
 // including the first failed step (if any) and a concise error description.
 func (i *inspector) InspectTaskRun(ctx context.Context, namespace, name string) (types.TaskRunDebugInfo, error) {
-	tri := types.TaskRunDebugInfo{TaskRunID: name, Namespace: namespace}
+	tri := types.TaskRunDebugInfo{TaskRun: name, Namespace: namespace}
 	tr, err := i.tekton.TektonV1().TaskRuns(namespace).Get(ctx, name, metav1.GetOptions{})
 	if err != nil {
 		tri.Error = types.ErrorInfo{
