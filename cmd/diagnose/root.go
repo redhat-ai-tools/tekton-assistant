@@ -14,10 +14,11 @@ type Config struct {
 	Temperature float32
 	MaxTokens   int
 	Timeout     time.Duration
+	Debug       bool
 }
 
 var (
-	rootCmd = &cobra.Command{Use: "tekton-assist", Short: "Tekton TaskRun context extractor"}
+	rootCmd = &cobra.Command{Use: "context-extractor", Short: "Tekton TaskRun context extractor"}
 	cfg     = &Config{}
 )
 
@@ -28,6 +29,7 @@ func init() {
 	rootCmd.PersistentFlags().Float32Var(&cfg.Temperature, "openai-temperature", 0.2, "OpenAI sampling temperature")
 	rootCmd.PersistentFlags().IntVar(&cfg.MaxTokens, "openai-max-tokens", 400, "OpenAI max output tokens")
 	rootCmd.PersistentFlags().DurationVar(&cfg.Timeout, "openai-timeout", 30*time.Second, "OpenAI request timeout")
+	rootCmd.PersistentFlags().BoolVar(&cfg.Debug, "debug", false, "Enable verbose logging")
 }
 
 func Execute() {

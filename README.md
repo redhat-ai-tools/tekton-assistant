@@ -11,7 +11,26 @@ Tekton Assistant helps explain failed Pipelines/TaskRuns and guide remediation.
   - Suggests actionable fixes (e.g., permissions, image pull errors)
   - Examples: "Check if secret 'docker-creds' exists in namespace Y", "Verify registry authentication"
 
-## Architecture
+## Using Gemini LLM
+
+### Build
+```
+go build ./cmd/diagnose
+```
+
+### Usage
+```
+OPENAI_API_KEY="$OPENAI_API_KEY" ./diagnose serve \
+  --openai-base-url "https://generativelanguage.googleapis.com/v1beta/openai/" \
+  --openai-model "gemini-2.5-flash" --debug
+```
+### Test
+```
+curl -s "http://localhost:8080/taskrun/diagnose?namespace=default&taskrun_name=pipelinerun-go-golangci-lint" | jq
+```
+
+
+## Using RAG Architecture 
 
 ### Simplified flow from TaskRun/PipelineRun failure to LLM response
 ```mermaid
