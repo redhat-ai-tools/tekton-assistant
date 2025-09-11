@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"tekton-assist/pkg/analysis"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/analysis"
 )
 
 func init() {

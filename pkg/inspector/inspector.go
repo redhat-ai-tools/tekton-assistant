@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"tekton-assist/pkg/client"
-	"tekton-assist/pkg/types"
+
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/client"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/types"
 
 	pipelinev1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	tektonclient "github.com/tektoncd/pipeline/pkg/client/clientset/versioned"

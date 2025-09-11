@@ -1,4 +1,4 @@
-module tekton-assist
+module github.com/redhat-community-ai-tools/tekton-assist
 
 go 1.24.0
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"tekton-assist/pkg/types"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/types"
 
 	pipelinev1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1"
 	tektonfake "github.com/tektoncd/pipeline/pkg/client/clientset/versioned/fake"

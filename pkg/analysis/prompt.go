@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"tekton-assist/pkg/types"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/types"
 )
 
 // BuildTaskRunPrompt creates a concise user prompt for the LLM from TaskRunDebugInfo.

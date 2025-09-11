@@ -12,8 +12,8 @@ import (
 	"syscall"
 	"time"
 
-	"tekton-assist/pkg/analysis"
-	"tekton-assist/pkg/inspector"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/analysis"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/inspector"
 )
 
 // HandlerFunc defines a generic HTTP handler function type

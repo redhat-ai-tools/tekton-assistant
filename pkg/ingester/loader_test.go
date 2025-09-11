@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	ttypes "tekton-assist/pkg/types"
+	ttypes "github.com/redhat-community-ai-tools/tekton-assist/pkg/types"
 )
 
 func TestInferErrorType(t *testing.T) {

@@ -9,7 +9,7 @@ import (
 	"sort"
 	"strings"
 
-	"tekton-assist/pkg/types"
+	"github.com/redhat-community-ai-tools/tekton-assist/pkg/types"
 )
 
 type Loader struct{}

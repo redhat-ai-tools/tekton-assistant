@@ -1,0 +1,9 @@
+defaultBaseImage: cgr.dev/chainguard/static
+baseImageOverrides:
+  github.com/redhat-community-ai-tools/tekton-assist/cmd/diagnose: registry.access.redhat.com/ubi9/ubi-minimal
+
+
+builds:
+  - id: ko
+    ldflags:
+      - "{{ .Env.LDFLAGS }}"

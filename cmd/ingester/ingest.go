@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	loaderpkg "tekton-assist/pkg/ingester"
+	loaderpkg "github.com/redhat-community-ai-tools/tekton-assist/pkg/ingester"
 
 	llamastackclient "github.com/llamastack/llama-stack-client-go"
 	"github.com/llamastack/llama-stack-client-go/option"
