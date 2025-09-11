@@ -45,7 +45,7 @@ func NewHTTPServer(endpoint string, log *log.Logger, llm analysis.LLM) *httpServ
 
 // registerHandlers registers all HTTP endpoints
 func (h *httpServer) registerHandlers() {
-	h.handlers["/taskrun/diagnose"] = h.handleDiagnose
+	h.handlers["/taskrun/explainFailure"] = h.handleExplainFailure
 	// Add more endpoints here if needed
 }
 
@@ -70,7 +70,7 @@ func (h *httpServer) initServer() {
 }
 
 // handleDiagnose handles the /taskrun/diagnose endpoint
-func (h *httpServer) handleDiagnose(w http.ResponseWriter, r *http.Request) {
+func (h *httpServer) handleExplainFailure(w http.ResponseWriter, r *http.Request) {
 	taskrunName := r.URL.Query().Get("taskrun_name")
 	namespace := r.URL.Query().Get("namespace")
 	if taskrunName == "" || namespace == "" {
@@ -105,11 +105,16 @@ func (h *httpServer) handleDiagnose(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// DEMO: pretty text output
+	/*w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	_, _ = w.Write([]byte(analysis.RenderPrettyReport(result, analysisText)))
+	return*/
+
+	// Original JSON response (commented out for demo; keep to rollback easily)
 	type response struct {
 		Debug    interface{} `json:"debug"`
 		Analysis string      `json:"analysis,omitempty"`
 	}
-
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(response{Debug: result, Analysis: analysisText}); err != nil {
 		h.log.Printf("Failed to encode response: %v", err)

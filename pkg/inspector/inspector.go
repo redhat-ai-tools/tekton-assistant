@@ -116,7 +116,7 @@ func (i *inspector) InspectTaskRun(ctx context.Context, namespace, name string) 
 			if container != "" {
 				var tail int64 = 200
 				if raw, err := fetchContainerLogs(ctx, i.kube, namespace, tr.Status.PodName, container, tail); err == nil {
-					if snip := extractErrorSnippet(raw, 5); snip != "" {
+					if snip := extractErrorSnippet(raw, 10); snip != "" {
 						tri.Error.LogSnippet = snip
 					}
 				}
