@@ -17,7 +17,7 @@ type Config struct {
 }
 
 var (
-	rootCmd = &cobra.Command{Use: "context-extractor", Short: "Tekton TaskRun context extractor"}
+	rootCmd = &cobra.Command{Use: "tekton-assist", Short: "Tekton TaskRun context extractor"}
 	cfg     = &Config{}
 )
 

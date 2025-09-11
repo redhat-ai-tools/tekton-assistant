@@ -18,7 +18,7 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Start the context extractor HTTP server",
 	Run: func(cmd *cobra.Command, args []string) {
-		logger := log.New(os.Stdout, "context-extractor ", log.LstdFlags|log.Lshortfile)
+		logger := log.New(os.Stdout, "tekton-assist ", log.LstdFlags|log.Lshortfile)
 		llm, err := analysis.NewOpenAILLM(analysis.OpenAIConfig{
 			Model:          cfg.OpenAIModel,
 			BaseURL:        cfg.OpenAIBase,
