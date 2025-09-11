@@ -20,7 +20,7 @@ go build ./cmd/diagnose
 
 ### Usage
 ```
-OPENAI_API_KEY="$OPENAI_API_KEY" ./diagnose serve \
+OPENAI_API_KEY="$GEMINI_API_KEY" ./diagnose serve \
   --openai-base-url "https://generativelanguage.googleapis.com/v1beta/openai/" \
   --openai-model "gemini-2.5-flash" --debug
 ```
