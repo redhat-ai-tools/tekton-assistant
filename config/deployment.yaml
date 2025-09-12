@@ -80,6 +80,9 @@ spec:
           ports:
             - name: metrics
               containerPort: 9090
+          envFrom:
+            - configMapRef: 
+                name: tekton-assist-config
           env:
             - name: SYSTEM_NAMESPACE
               valueFrom:
